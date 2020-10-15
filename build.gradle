@@ -1,12 +1,48 @@
+buildscript {
+	ext {
+		springBootVersion = '2.1.17.RELEASE'
+	}
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
+	}
+}
+
+
 plugins {
 	id 'org.springframework.boot' version '2.1.17.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'com.palantir.docker' version '0.22.1'
 }
 
-group = 'br.com.siecola'
+group = '01081509'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '1.8'
+
+bootJar {
+	baseName = 't195_aws_project01'
+	version = '0.1.0'
+}
+
+task unpack(type: Copy) {
+	dependsOn bootJar
+	from(zipTree(tasks.bootJar.outputs.files.singleFile))
+	into("build/dependency")
+}
+
+docker {
+	name "${project.group}/${bootJar.baseName}"
+	tags "${bootJar.version}"
+	copySpec.from(tasks.unpack.outputs).into("dependency")
+	buildArgs(['DEPENDENCY': "dependency"])
+}
 
 repositories {
 	mavenCentral()
