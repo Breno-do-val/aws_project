@@ -2,6 +2,7 @@ buildscript {
 	ext {
 		springBootVersion = '2.1.17.RELEASE'
 	}
+<<<<<<< HEAD
 repositories {
 	mavenCentral()
 	maven {
@@ -13,6 +14,20 @@ dependencies {
 	classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
 }
+=======
+	repositories {
+		mavenCentral()
+		maven {
+			url "https://plugins.gradle.org/m2/"
+		}
+	}
+	dependencies {
+		classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+		classpath('gradle.plugin.com.palantir.gradle.docker:gradle-docker:0.13.0')
+	}
+}
+
+>>>>>>> 9f8a9a8b39a0c5269ae337f88ce6766d537a8a35
 
 plugins {
 	id 'org.springframework.boot' version '2.1.17.RELEASE'
@@ -27,7 +42,11 @@ sourceCompatibility = '1.8'
 
 bootJar {
 	baseName = 't195_aws_project01'
+<<<<<<< HEAD
 	version = '0.2.0'
+=======
+	version = '0.3.0'
+>>>>>>> 9f8a9a8b39a0c5269ae337f88ce6766d537a8a35
 }
 
 task unpack(type: Copy) {
@@ -35,6 +54,10 @@ task unpack(type: Copy) {
 	from(zipTree(tasks.bootJar.outputs.files.singleFile))
 	into("build/dependency")
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> 9f8a9a8b39a0c5269ae337f88ce6766d537a8a35
 docker {
 	name "${project.group}/${bootJar.baseName}"
 	tags "${bootJar.version}"
@@ -42,7 +65,10 @@ docker {
 	buildArgs(['DEPENDENCY': "dependency"])
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> 9f8a9a8b39a0c5269ae337f88ce6766d537a8a35
 repositories {
 	mavenCentral()
 }
@@ -51,8 +77,15 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
+<<<<<<< HEAD
 	
 	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client-jre7', version: '1.6.1'
 	
+=======
+	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+
+	compile group: 'org.mariadb.jdbc', name: 'mariadb-java-client-jre7', version: '1.6.1'
+
+>>>>>>> 9f8a9a8b39a0c5269ae337f88ce6766d537a8a35
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
